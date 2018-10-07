@@ -1,0 +1,26 @@
+{
+    "name": "damianbal/php-meetio",
+    "description": "Meeting App",
+    "authors": [
+        {
+            "name": "DamianBal",
+            "email": "balandowski@icloud.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "damianbal\\":"src/"
+        }
+    },
+    "require": {
+        "gabordemooij/redbean": "dev-master",
+        "symfony/routing": "^4.1",
+        "symfony/http-foundation": "^4.1",
+        "symfony/http-kernel": "^4.1",
+        "symfony/event-dispatcher": "^4.1",
+        "doctrine/orm": "*"
+    },
+    "require-dev": {
+        "symfony/dotenv": "^4.1"
+    }
+}

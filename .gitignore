@@ -1,0 +1,4 @@
+vendor
+config.env
+app/node_modules
+public/app/
