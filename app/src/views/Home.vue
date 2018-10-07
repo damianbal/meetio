@@ -2,16 +2,25 @@
     <div class="row">
         <div class="col-sm-12">
         <div class="card shadow-sm border-0">
+
+        
+
             <div class="card-header"><i class="fas fa-calendar-alt"></i> Meetings</div> 
 
             <div class="card-body row text-center">
+
+                <transition name="fade">
+            <loading-component v-if="loading" />
+
+                </transition>
+
                 <meeting-card v-for="(meeting, idx) in meetings" 
                             :key="idx" 
                             :title="meeting.title"
                             :id="meeting.id" />
 
                 <div class="col-sm-12 mt-3">
-  <button class="btn btn-light btn-sm btn-block p-3" @click="fetchMeetings"><i class="fas fa-arrow-down"></i> Load Older Meetings</button>
+  <button class="btn btn-light btn-sm btn-block p-3" @click="load"><i class="fas fa-arrow-down"></i> Load Older Meetings</button>
                 </div>
             </div>
 
@@ -39,8 +48,12 @@ export default {
   async mounted() {
     //let resp = await MeetingAPI.getMeetings(1)
 
-    this.reset()
-    this.fetchMeetings();
+    this.loading = true
+
+    await this.reset()
+    await this.fetchMeetings();
+
+    this.loading = false
 
     //this.meetings = resp.data.data
   },
@@ -48,7 +61,17 @@ export default {
     ...mapActions({
       fetchMeetings: "meetings/fetchMeetings",
       reset: "meetings/reset"
-    })
+    }),
+    async load() {
+        this.loading = true
+        
+
+        setTimeout(() => {
+            this.fetchMeetings()
+            this.loading = false
+        }, 500)
+        
+    }
   },
   computed: {
     ...mapState("meetings", ["meetings"])
@@ -56,6 +79,7 @@ export default {
   data: () => {
     return {
       //   meetings: []
+      loading: false
     };
   },
   components: { MeetingCard }
@@ -63,4 +87,10 @@ export default {
 </script>
 
 <style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>

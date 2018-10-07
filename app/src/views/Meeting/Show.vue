@@ -5,11 +5,24 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-8">
-            {{ description }}
+                    <div>
+                     Description: {{ description }}
+                    </div>
+
+                    <div>
+                        Location: {{ location }}
+                    </div>
+
+                    <div>Taking place on {{ fullDate }} </div>
             </div>
 
             <div class="col-sm-4">
                 Osoby
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                <add-attendee-component />
             </div>
         </div>
     </div>
@@ -17,12 +30,15 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
+
+import AddAttendeeComponent from '@/components/AddAttendeeComponent'
 
 export default {
     props: ["id"],
     computed: {
-        ...mapState('meeting', ['title', 'description'])
+        ...mapState('meeting', ['title', 'description', 'location']),
+        ...mapGetters('meeting', ['fullDate'])
     },
     mounted() {
         this.fetchMeeting(this.id)
@@ -36,7 +52,8 @@ export default {
         ...mapActions({
             fetchMeeting: 'meeting/fetchMeeting'
         })
-    }
+    },
+    components: { AddAttendeeComponent }
 }
 </script>
 
