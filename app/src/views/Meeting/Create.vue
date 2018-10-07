@@ -17,10 +17,18 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-8">
                         <div class="form-group">
                             <label>Description</label>
                             <textarea placeholder="Description of event" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Date <small class="text-muted">(When does that event take place?)</small></label>
+                           
+                            <input class="form-control" type="date">
                         </div>
                     </div>
 

@@ -5,36 +5,62 @@
             <div class="card-header"><i class="fas fa-calendar-alt"></i> Meetings</div> 
 
             <div class="card-body row text-center">
-                        <div v-for="(meeting, idx) in meetings" :key="idx" class="col-sm-3">
-            <div>Meeting: {{ meeting.title }}</div>
-            <div>
-            <button class="btn btn-light btn-sm">Show</button>
+                <meeting-card v-for="(meeting, idx) in meetings" 
+                            :key="idx" 
+                            :title="meeting.title"
+                            :id="meeting.id" />
+
+                <div class="col-sm-12 mt-3">
+  <button class="btn btn-light btn-sm btn-block p-3" @click="fetchMeetings"><i class="fas fa-arrow-down"></i> Load Older Meetings</button>
+                </div>
             </div>
-        </div>
-            </div>
-        </div>
+
 
         </div>
+
+
+
+        </div>
+
+      
     </div>
 </template>
 
 <script>
-import Axios from 'axios'
+import Axios from "axios";
+
+import MeetingAPI from "@/api/meeting";
+
+import { mapActions, mapState } from "vuex";
+
+import MeetingCard from "@/components/MeetingCard"
 
 export default {
-    mounted() {
-        Axios.get('/meetings').then(resp => {
-            this.meetings = resp.data
-        })
-    },
-    data: () => {
-        return {
-            meetings: []
-        }
-    }
-}
+  async mounted() {
+    //let resp = await MeetingAPI.getMeetings(1)
+
+    this.reset()
+    this.fetchMeetings();
+
+    //this.meetings = resp.data.data
+  },
+  methods: {
+    ...mapActions({
+      fetchMeetings: "meetings/fetchMeetings",
+      reset: "meetings/reset"
+    })
+  },
+  computed: {
+    ...mapState("meetings", ["meetings"])
+  },
+  data: () => {
+    return {
+      //   meetings: []
+    };
+  },
+  components: { MeetingCard }
+};
 </script>
 
 <style>
-
 </style>

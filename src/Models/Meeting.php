@@ -5,15 +5,14 @@ namespace damianbal\Models;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-
 /**
  * @Entity(repositoryClass="damianbal\Repositories\MeetingRepository") @Table(name="meetings")
  **/
-class Meeting 
+class Meeting
 {
     public function __construct()
-    {  
-       $this->attendees = new ArrayCollection(); 
+    {
+        $this->attendees = new ArrayCollection();
     }
 
     /** @Id @Column(type="integer") @GeneratedValue */
@@ -36,7 +35,7 @@ class Meeting
      */
     protected $attendees;
 
-    public function setTitle($title) 
+    public function setTitle($title)
     {
         $this->title = $title;
     }
@@ -76,12 +75,12 @@ class Meeting
         return $this->date;
     }
 
-    public function getAttendees() : Collection
+    public function getAttendees(): Collection
     {
         return $this->attendees;
     }
 
-    public function getId() 
+    public function getId()
     {
         return $this->id;
     }
@@ -97,7 +96,7 @@ class Meeting
             'title' => $this->title,
             'location' => $this->location,
             'id' => $this->id,
-            'description' => $this->description
+            'description' => $this->description,
         ];
     }
 }

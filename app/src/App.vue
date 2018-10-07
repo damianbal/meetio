@@ -3,8 +3,11 @@
     <div class="container">
       <div class="row mb-4">
         <div class="col-sm-12">
-          <nav class="navi"> 
+          <nav class="navi bg-primary"> 
+            <span class="brand">Meetio</span>
             <router-link :to="{ name: 'home'}">Home</router-link>
+                        <router-link :to="{ name: 'meetingCreate'}">Create Meeting</router-link>
+
           </nav>
         </div>
       </div>

@@ -17,10 +17,19 @@ npm run build # npm run watch when developing :)
 
 Set your database details in config.env file, then run those commands.
 
+config.env should like like this
+
+```javascript
+DB_HOST=
+DB_NAME=
+DB_USER=
+DB_PASS=
+```
+
 Back-end
 ```sh
 composer install
-# doctrine schema
+vendor/bin/doctrine orm:schema-tool:create --dump-sql
 cd public
 php -S localhost:8000 # or use Heorku?
 ```

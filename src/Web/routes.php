@@ -1,11 +1,11 @@
 <?php
 
+use damianbal\Models\Attendee;
 use damianbal\Models\Meeting;
 use damianbal\Resources\AttendeeResource;
+use damianbal\Resources\MeetingResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use damianbal\Resources\MeetingResource;
-use damianbal\Models\Attendee;
 
 /**
  * Return all meetings
@@ -13,12 +13,11 @@ use damianbal\Models\Attendee;
 $app->get('/meetings', function (Request $request) use ($app) {
     $meetingRepository = $app->getEntityManager()->getRepository('damianbal\Models\Meeting');
 
-   // $meetings = $meetingRepository->findAll();
+    // $meetings = $meetingRepository->findAll();
 
     $paginator = $meetingRepository->getForPage($request->get('page') ?? 1);
 
     $meetings = $paginator->getIterator();
-
 
     $attendeeResource = new AttendeeResource;
 
@@ -31,9 +30,9 @@ $app->get('/meetings', function (Request $request) use ($app) {
     }
 
     return new JsonResponse(['meta' => [
-        'currentPage' => (int)$request->get('page') ?? 1,
+        'currentPage' => (int) $request->get('page') ?? 1,
         'lastPage' => ceil($paginator->count() / 6),
-        'perPage' =>  6,
+        'perPage' => 6,
     ], 'data' => $jmeetings]);
 });
 
@@ -49,18 +48,13 @@ $app->post('/meetings', function (Request $request) use ($app) {
     $meeting->setDescription($request->get('description'));
 
     // check if meeting takes place before today
-    if(new DateTime($request->get('date')) < new DateTime("now") || $request->get('date') === null )
-    {
+    if (new DateTime($request->get('date')) < new DateTime("now") || $request->get('date') === null) {
         return new JsonResponse(['created' => false, 'message' => 'Meeting must take place in future!']);
     }
 
-    
-    if($request->get('date'))
-    {
+    if ($request->get('date')) {
         $meeting->setDate(new DateTime($request->get('date')));
-    }
-    else 
-    {
+    } else {
         $meeting->setDate(new DateTime("now"));
     }
 
@@ -85,7 +79,7 @@ $app->get('/meetings/{id}', function (Request $request) use ($app) {
 
     $meetingResource = new MeetingResource;
 
-  // return new JsonResponse(array_merge($meeting->toJson(), ['success' => true]));
+    // return new JsonResponse(array_merge($meeting->toJson(), ['success' => true]));
     return new JsonResponse(array_merge($meetingResource->one($meeting), ['success' => true]));
 });
 
@@ -115,4 +109,3 @@ $app->post('/meetings/{id}/attendees', function (Request $request) use ($app) {
 
     return new JsonResponse(['created' => true, 'attendee_id' => $attendee->getId()], 201);
 });
-
