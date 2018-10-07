@@ -15,8 +15,10 @@ $app->get('/meetings', function (Request $request) use ($app) {
 
    // $meetings = $meetingRepository->findAll();
 
-    $meetings = $meetingRepository->getForPage($request->get('page') ?? 1)
-                                   ->getIterator();
+    $paginator = $meetingRepository->getForPage($request->get('page') ?? 1);
+
+    $meetings = $paginator->getIterator();
+
 
     $attendeeResource = new AttendeeResource;
 
@@ -28,7 +30,11 @@ $app->get('/meetings', function (Request $request) use ($app) {
         $jmeetings[] = $jmeeting;
     }
 
-    return new JsonResponse($jmeetings);
+    return new JsonResponse(['meta' => [
+        'currentPage' => (int)$request->get('page') ?? 1,
+        'lastPage' => ceil($paginator->count() / 6),
+        'perPage' =>  6,
+    ], 'data' => $jmeetings]);
 });
 
 $app->get('/test', function (Request $request) use ($app) {
