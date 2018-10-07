@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 
 
 /**
- * @Entity @Table(name="meetings")
+ * @Entity(repositoryClass="damianbal\Repositories\MeetingRepository") @Table(name="meetings")
  **/
 class Meeting 
 {
@@ -50,7 +50,7 @@ class Meeting
     {
         $this->location = $location;
     }
-    
+
     public function setDate($date)
     {
         $this->date = clone $date;

@@ -13,7 +13,10 @@ use damianbal\Models\Attendee;
 $app->get('/meetings', function (Request $request) use ($app) {
     $meetingRepository = $app->getEntityManager()->getRepository('damianbal\Models\Meeting');
 
-    $meetings = $meetingRepository->findAll();
+   // $meetings = $meetingRepository->findAll();
+
+    $meetings = $meetingRepository->getForPage($request->get('page') ?? 1)
+                                   ->getIterator();
 
     $attendeeResource = new AttendeeResource;
 
@@ -26,6 +29,23 @@ $app->get('/meetings', function (Request $request) use ($app) {
     }
 
     return new JsonResponse($jmeetings);
+});
+
+$app->get('/test', function (Request $request) use ($app) {
+    
+    $repo = $app->getEntityManager()->getRepository('damianbal\Models\Meeting');
+
+    $d = $repo->getForPage(1)->getIterator();
+
+  //  var_dump($d);
+
+  $dr = [];
+
+    foreach($d as $mm) {
+        $dr [] = $mm->getTitle();
+    }
+
+    return new JsonResponse(['xd' => $dr]);
 });
 
 /**
