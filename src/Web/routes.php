@@ -37,23 +37,6 @@ $app->get('/meetings', function (Request $request) use ($app) {
     ], 'data' => $jmeetings]);
 });
 
-$app->get('/test', function (Request $request) use ($app) {
-    
-    $repo = $app->getEntityManager()->getRepository('damianbal\Models\Meeting');
-
-    $d = $repo->getForPage(1)->getIterator();
-
-  //  var_dump($d);
-
-  $dr = [];
-
-    foreach($d as $mm) {
-        $dr [] = $mm->getTitle();
-    }
-
-    return new JsonResponse(['xd' => $dr]);
-});
-
 /**
  * Add new meeting
  */
