@@ -16,6 +16,7 @@ class MeetingResource extends Resource
             'id' => $res->getId(),
             'description' => $res->getDescription(),
             'attendees' => $attendeeResource->collection($res->getAttendees()),
+            'date' => $res->getDate(),
         ];
     }
 }

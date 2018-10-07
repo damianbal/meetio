@@ -28,6 +28,9 @@ class Meeting
     /** @Column(type="string") */
     protected $location;
 
+    /** @Column(type="date") */
+    protected $date;
+
     /**
      * @OneToMany(targetEntity="damianbal\Models\Attendee", mappedBy="meeting")
      */
@@ -47,6 +50,11 @@ class Meeting
     {
         $this->location = $location;
     }
+    
+    public function setDate($date)
+    {
+        $this->date = clone $date;
+    }
 
     public function getLocation()
     {
@@ -61,6 +69,11 @@ class Meeting
     public function getDescription()
     {
         return $this->description;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
     }
 
     public function getAttendees() : Collection

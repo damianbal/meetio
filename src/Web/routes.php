@@ -39,6 +39,24 @@ $app->post('/meetings', function (Request $request) use ($app) {
     $meeting->setLocation($request->get('location'));
     $meeting->setDescription($request->get('description'));
 
+    // check if meeting takes place before today
+    if(new DateTime($request->get('date')) < new DateTime("now") || $request->get('date') === null )
+    {
+        return new JsonResponse(['created' => false, 'message' => 'Meeting must take place in future!']);
+    }
+
+    
+    if($request->get('date'))
+    {
+        $meeting->setDate(new DateTime($request->get('date')));
+    }
+    else 
+    {
+        $meeting->setDate(new DateTime("now"));
+    }
+
+    $meeting->setDate(new DateTime($request->get('date')));
+
     $app->getEntityManager()->persist($meeting);
     $app->getEntityManager()->flush();
 
@@ -67,9 +85,17 @@ $app->get('/meetings/{id}', function (Request $request) use ($app) {
  */
 $app->post('/meetings/{id}/attendees', function (Request $request) use ($app) {
 
-    $name = $request->get('name');
+    if (!$request->get('name') || strlen($request->get('name')) < 3) {
+        return new JsonResponse(['created' => false, 'message' => 'Missing name attribute or not valid!']);
+    }
+
+    $name = $request->get('name') ?? 'Unknown';
 
     $meeting = $app->getEntityManager()->find('damianbal\Models\Meeting', $request->get('id'));
+
+    if ($meeting == null) {
+        return new JsonResponse(['success' => false, 'message' => 'Meeting does not exist!']);
+    }
 
     $attendee = new Attendee;
     $attendee->setName($name);
@@ -78,12 +104,6 @@ $app->post('/meetings/{id}/attendees', function (Request $request) use ($app) {
     $app->getEntityManager()->persist($attendee);
     $app->getEntityManager()->flush();
 
-    return new JsonResponse(['created' => true, 'attendee_id' => $attendee->getId()]);
+    return new JsonResponse(['created' => true, 'attendee_id' => $attendee->getId()], 201);
 });
 
-/**
- * Remove attendee from meeting, token required
- */
-$app->delete('/attendees/{id}', function (Request $request) {
-
-});
