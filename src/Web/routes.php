@@ -48,9 +48,9 @@ $app->post('/meetings', function (Request $request) use ($app) {
     $meeting->setDescription($request->get('description'));
 
     // check if meeting takes place before today
-    if (new DateTime($request->get('date')) < new DateTime("now") || $request->get('date') === null) {
-        return new JsonResponse(['created' => false, 'message' => 'Meeting must take place in future!']);
-    }
+ //  if (new DateTime($request->get('date')) < new DateTime("now") || $request->get('date') === null) {
+   //     return new JsonResponse(['created' => false, 'message' => 'Meeting must take place in future!']);
+    //}
 
     if ($request->get('date')) {
         $meeting->setDate(new DateTime($request->get('date')));
@@ -88,7 +88,7 @@ $app->get('/meetings/{id}', function (Request $request) use ($app) {
  */
 $app->post('/meetings/{id}/attendees', function (Request $request) use ($app) {
 
-    if (!$request->get('name') || strlen($request->get('name')) < 3) {
+    if (strlen($request->get('name')) < 3 || $request->get('name') === null) {
         return new JsonResponse(['created' => false, 'message' => 'Missing name attribute or not valid!']);
     }
 

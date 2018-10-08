@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card shadow-sm border-0">
         <div class="card-header"><i class="fas fa-calendar"></i> Create Meeting</div>
 
         <div class="card-body">
@@ -8,19 +8,19 @@
                     <div class="col-sm-8">
               <div class="form-group">
                     <label>Title</label> 
-                    <input v-model="title" minlength="3" placeholder="Title of event" type="text" class="form-control">
+                    <input v-model="title" minlength="3" placeholder="Title of event" type="text" class="form-control" required>
                 </div>
                     </div>
                     <div class="col-sm-4">
            <label>Location</label> 
-                    <input v-model="location" minlength="3" placeholder="Location of event" type="text" class="form-control">
+                    <input v-model="location" minlength="3" placeholder="Location of event" type="text" class="form-control" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea v-model="description" placeholder="Description of event" class="form-control"></textarea>
+                            <textarea minlength="10" v-model="description" placeholder="Description of event" class="form-control"></textarea>
                         </div>
                     </div>
 
@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <label>Date <small class="text-muted">(When does that event take place?)</small></label>
                            
-                            <input v-model="date" class="form-control" type="date">
+                            <input v-model="date" class="form-control" type="date" required>
                         </div>
                     </div>
 
@@ -45,16 +45,27 @@
 <script>
 import MeetingAPI from "@/api/meeting"
 
+import moment from 'moment'
+
 export default {
     methods: {
         async submit() {
-    
-            let jDate = new Date(this.date)
-            let mdy = `${jDate.getDay()}-${jDate.getMonth()}-${jDate.getFullYear()}`
-           
-           console.log(mdy)
+            let mdy = moment(this.date, 'YYYY-MM-DD').format('DD-MM-YYYY')
 
-            //let resp = await MeetingAPI.createMeeting(this.title, this.description, this.location, mdy)
+            let resp = await MeetingAPI.createMeeting(this.title, this.description, this.location, mdy)
+
+            let success = resp.data.created 
+
+            if(success) {
+                let id = resp.data.id 
+
+                alert('Meeting created!')
+
+                this.$router.push({name: 'meetingShow', params: { id } })
+            }
+            else {
+                alert('Could not create meeting!')
+            }
 
             //console.log(resp)
         }

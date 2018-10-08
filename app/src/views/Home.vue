@@ -1,38 +1,31 @@
 <template>
-    <div class="row">
-        <div class="col-sm-12">
+<div class="row">
+    <div class="col-sm-12">
         <div class="card shadow-sm border-0">
-
-        
-
-            <div class="card-header"><i class="fas fa-calendar-alt"></i> Meetings</div> 
+            <div class="card-header"><i class="fas fa-calendar-alt"></i> Meetings</div>
 
             <div class="card-body row text-center">
 
                 <transition name="fade">
-            <loading-component v-if="loading" />
-
+                    <loading-component v-if="loading" />
                 </transition>
 
+              
                 <meeting-card v-for="(meeting, idx) in meetings" 
-                            :key="idx" 
-                            :title="meeting.title"
-                            :id="meeting.id" />
+                    :key="idx" 
+                    :title="meeting.title" 
+                    :id="meeting.id" />
+             
 
                 <div class="col-sm-12 mt-3">
-  <button class="btn btn-light btn-sm btn-block p-3" @click="load"><i class="fas fa-arrow-down"></i> Load Older Meetings</button>
+                    <button class="btn btn-light btn-sm btn-block p-3" @click="load"><i class="fas fa-arrow-down"></i>
+                        Load Older Meetings</button>
                 </div>
             </div>
 
-
         </div>
-
-
-
-        </div>
-
-      
     </div>
+</div>
 </template>
 
 <script>

@@ -4,7 +4,7 @@
 Browse meetings which are added to site, create your own meeting letting people to know about it, or join
 meetings yourself :)
 
-Image
+![Meetio](meetio.png?raw=true)
 
 ## Installation
 
@@ -40,12 +40,14 @@ Navigate to "/app/" to access front-end of app.
 
 ## Made with those libraries
 
-* [Symfony Components]() - HttpFoundation, DotEnv, HttpKernel, EventDispatcher, Routing
-* [Doctrine/ORM]() - Database
-* [Vue.js]() - Front-end framework
-* [Bootstrap]() - CSS Framework
-* [Font-Awesome]() - Icons
-* [Axios]() - HTTP Requests
+* [Symfony Components](https://symfony.com/components) - HttpFoundation, DotEnv, HttpKernel, EventDispatcher, Routing
+* [Doctrine/ORM](https://www.doctrine-project.org/projects/orm.html) - Database
+* [Vue.js](https://vuejs.org/) - Front-end framework
+* [Bootstrap](http://getbootstrap.com/) - CSS Framework
+* [Font-Awesome](https://fontawesome.com/icons?d=gallery) - Icons
+* [Axios](https://github.com/axios/axios) - HTTP Requests
+* [Moment](https://github.com/moment/moment/) - Dates
+* [querystring](https://github.com/Gozala/querystring)
 
 ## Meta
 

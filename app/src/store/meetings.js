@@ -35,12 +35,9 @@ export default {
         },
         async fetchMeetings({
             commit,
-            dispatch,
             state
         }) {
             let resp = await MeetingAPI.getMeetings(state.page)
-
-            console.log(resp.data)
 
             if (resp.data.data.length < 1) {
                 alert("No more to load!");
@@ -52,7 +49,6 @@ export default {
 
                 if (state.page <= state.maxPage) {
                     commit('SET_PAGE', state.page + 1)
-
                 }
             }
         }

@@ -1,5 +1,7 @@
 import meetingApi from '@/api/meeting'
 
+import moment from 'moment'
+
 export default {
     namespaced: true,
     state: {
@@ -7,7 +9,7 @@ export default {
         title: "Loading..",
         description: "Loading...",
         location: "Loading...",
-        date: "01-01-2099",
+        date: "2050-05-05",
         attendees:[],
     },
     mutations: {
@@ -30,14 +32,16 @@ export default {
             state.attendees = attendees
         },
         ADD_ATTENDEE(state, attendee) {
-            state.attendees.push(attendee)
+            state.attendees.push({ name: attendee })
         }
     },
     actions: {
-        async addAttendee({ commit }, attendee) {
-            commit('ADD_ATTENDEE', attendee)
-
-            // API CALL 
+        async addAttendee({ commit, state }, attendee) {
+            
+            meetingApi.addAttendee(state.id, attendee).then(resp => {
+                commit('ADD_ATTENDEE', attendee)
+               // console.log(resp.data)
+            })
         },
         async fetchMeeting({ commit }, id) {
             let resp = await meetingApi.getMeeting(id)
@@ -47,8 +51,9 @@ export default {
                 commit('SET_TITLE', resp.data.title)
                 commit('SET_DESCRIPTION', resp.data.description)
                 commit('SET_LOCATION', resp.data.location)
-                commit('SET_DATE', resp.data.date)
+                commit('SET_DATE', resp.data.date.date)
                 commit('SET_ID', resp.data.id)
+                commit('SET_ATTENDEES', resp.data.attendees)
             }
             else 
             {
@@ -60,7 +65,7 @@ export default {
     },
     getters: {
         fullDate: state => {
-            return `TODO`
+            return moment(state.date, 'YYYY-MM-DD').format('MM-DD-YYYY')
         }
     }
 }
