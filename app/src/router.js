@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 
 import MeetingShow from './views/Meeting/Show.vue'
 import MeetingCreate from './views/Meeting/Create.vue'
+import MeetingSearch from './views/Meeting/Search.vue'
 
 Vue.use(Router)
 
@@ -25,6 +26,12 @@ export default new Router({
       name: 'meetingCreate',
       component: MeetingCreate,
       props: true
+    },
+    {
+      path: '/search',
+      name: 'meetingSearch',
+      component: MeetingSearch,
+      props: true,
     }
   ]
 })

@@ -45,11 +45,6 @@ export default {
     await this.fetchMeetings();
 
     this.loading = false
-
-    setInterval(async () => {
-      await this.reset()
-      await this.fetchMeetings()
-    }, 5000)  
   },
   methods: {
     ...mapActions({

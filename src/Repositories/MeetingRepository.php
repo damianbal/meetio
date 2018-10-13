@@ -18,6 +18,22 @@ class MeetingRepository extends EntityRepository
         return $paginator;
     }
 
+    /**
+     * Search meetings by title
+     *
+     * @param string $title
+     * @return void
+     */
+    public function search($title)
+    {
+        $q = $this->createQueryBuilder("m")
+                  ->where('m.title LIKE :title')
+                  ->setParameter('title', $title . '%')
+                  ->getQuery();
+
+        return $q->getResult();
+    }
+
     // https: //anil.io/blog/symfony/doctrine/symfony-and-doctrine-pagination-with-twig/
     public function paginate($dql, $page = 1, $limit = 6)
     {

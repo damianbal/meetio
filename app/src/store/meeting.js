@@ -1,6 +1,6 @@
-import meetingApi from '@/api/meeting'
+import meetingApi from '@/api/meeting';
+import moment from 'moment';
 
-import moment from 'moment'
 
 export default {
     namespaced: true,
@@ -14,25 +14,25 @@ export default {
     },
     mutations: {
         SET_ID(state,id) {
-            state.id = id
+            state.id = id;
         },
         SET_TITLE(state, title) {
-            state.title = title 
+            state.title = title;
         },
         SET_DESCRIPTION(state, description) {
-            state.description = description
+            state.description = description;
         },
         SET_LOCATION(state, location) {
-            state.location = location
+            state.location = location;
         },
         SET_DATE(state, date) {
-            state.date = date
+            state.date = date;
         },
         SET_ATTENDEES(state, attendees) {
-            state.attendees = attendees
+            state.attendees = attendees;
         },
         ADD_ATTENDEE(state, attendee) {
-            state.attendees.push({ name: attendee })
+            state.attendees.push({ name: attendee });
         }
     },
     actions: {

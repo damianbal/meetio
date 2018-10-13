@@ -7,6 +7,7 @@
             <span class="brand">Meetio</span>
             <router-link :to="{ name: 'home'}">Home</router-link>
                         <router-link :to="{ name: 'meetingCreate'}">Create Meeting</router-link>
+<router-link :to="{ name: 'meetingSearch'}">Search</router-link>
 
           </nav>
         </div>

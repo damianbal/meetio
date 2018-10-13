@@ -33,6 +33,16 @@ export default {
             commit('CLEAR_MEETINGS')
             commit('CLEAR_META')
         },
+        async search({commit}, query) {
+   
+
+            let resp = await MeetingAPI.search(query)
+
+            commit('CLEAR_MEETINGS')
+            commit('CLEAR_META')
+
+            commit('SET_MEETINGS', resp.data.data)
+        },
         async fetchMeetings({
             commit,
             state
@@ -51,6 +61,11 @@ export default {
                     commit('SET_PAGE', state.page + 1)
                 }
             }
+        }
+    },
+    getters: {
+        meetingsCount: state => {
+            return state.meetings.length 
         }
     }
 }

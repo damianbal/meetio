@@ -36,6 +36,20 @@ $app->get('/meetings', function (Request $request) use ($app) {
     ], 'data' => $jmeetings]);
 });
 
+$app->get('/meetings/search/{searchQuery}', function (Request $request) use ($app) {
+    $searchQ = $request->get('searchQuery') ?? '';
+
+    $repo = $app->getEntityManager()->getRepository('damianbal\Models\Meeting');
+
+    $meetings = $repo->search($searchQ);
+
+    $meetingResource = new MeetingResource;
+
+    return new JsonResponse([
+        'data' => $meetingResource->collection($meetings)
+    ]);
+});
+
 /**
  * Add new meeting
  */
