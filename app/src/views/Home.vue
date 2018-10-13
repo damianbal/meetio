@@ -39,8 +39,6 @@ import MeetingCard from "@/components/MeetingCard"
 
 export default {
   async mounted() {
-    //let resp = await MeetingAPI.getMeetings(1)
-
     this.loading = true
 
     await this.reset()
@@ -48,7 +46,10 @@ export default {
 
     this.loading = false
 
-    //this.meetings = resp.data.data
+    setInterval(async () => {
+      await this.reset()
+      await this.fetchMeetings()
+    }, 5000)  
   },
   methods: {
     ...mapActions({
